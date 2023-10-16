@@ -1,0 +1,89 @@
+package testweb.servlet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import javax.sql.DataSource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+
+@WebServlet("/profile")
+public class upload extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 获取用户信息并在JSP页面中显示
+        String userId = "1"; // 替换为当前用户的ID
+        String username = "";
+        String avatar = "";
+        try {
+            // 从数据库中获取用户信息
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/yourdb"); // 替换为你的数据源名称
+            Connection conn = ds.getConnection();
+            String sql = "SELECT username, avatar FROM user_profile WHERE id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                username = rs.getString("username");
+                avatar = rs.getString("avatar");
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        request.setAttribute("username", username);
+        request.setAttribute("avatar", avatar);
+        request.getRequestDispatcher("/profile.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 处理用户提交的表单数据
+        String newUsername = request.getParameter("username");
+        Part avatarPart = request.getPart("avatar");
+
+        // 更新数据库中的用户信息
+        String userId = "1"; // 替换为当前用户的ID
+        try {
+            // 将用户上传的头像保存到服务器或云存储，并更新数据库中的用户名和头像路径
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/yourdb"); // 替换为你的数据源名称
+            Connection conn = ds.getConnection();
+            String sql = "UPDATE user_profile SET username=?, avatar=? WHERE id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, newUsername);
+            stmt.setString(3, userId);
+
+            // 保存头像文件到服务器或云存储
+            InputStream avatarInputStream = avatarPart.getInputStream();
+            // 实际操作中，你需要将头像保存到服务器或云存储，并将其路径保存到数据库
+            // 例如，可以使用Amazon S3、Google Cloud Storage等云存储服务
+            // 这里只是一个示例，假设保存到服务器上
+            String avatarFilePath = "path/to/save/avatar/" + userId + ".jpg";
+            // 保存头像文件到服务器
+            // 你需要编写具体的保存文件的代码
+            // 例如，使用IO流将avatarInputStream写入到avatarFilePath
+
+            stmt.setString(2, avatarFilePath);
+            stmt.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 重定向到用户信息展示页面
+        response.sendRedirect(request.getContextPath() + "/profile");
+    }
+}

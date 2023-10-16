@@ -1,0 +1,16 @@
+package file;
+import java.sql.Connection;
+
+import file.file;
+import testweb.db.DBConnect;
+public class test {
+	public static void main(String[] args)
+    {
+        
+  
+        file.UpLoad("D:\\桌面\\新建文件夹 (9)");
+        
+    }
+	
+
+}

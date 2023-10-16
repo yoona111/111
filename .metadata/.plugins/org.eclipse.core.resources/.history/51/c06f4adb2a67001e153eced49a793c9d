@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="loginerror.css">
+</head>
+<body>
+   <div class="form-div">
+   <div class="reg-content">
+   <h1>welcome resgister</h1>
+   <span>已有账号？</span>
+    <button onclick="redirectToRegistrationPage()">注册</button>
+  <script>
+    function redirectToRegistrationPage() {
+      // 跳转到注册页面
+      window.location.href = "registered.jsp";
+    }
+  </script>
+    <button onclick="redirectToRegistrationPage1()">修改密码</button>
+  <script>
+    function redirectToRegistrationPage1() {
+      // 跳转到注册页面
+      window.location.href = "change.jsp";
+    }
+  </script>
+   </div>
+  <form id ="reg-form" method="post" action="./login">
+  <table>
+    <tr>
+    <tb class="inputs">
+     <label for="username">Username：</label>
+    <input type="text" id="username" name="username">
+      </tb>
+      </tr>
+    
+    <tr>
+    <tb class="inputs">
+    <label for="password">password：</label>
+    <input type="text" id="password" name="password">
+      </tb>
+      <br> 
+    <span class="error-message"Please enter the correct account number or password</span> 
+      </tr>
+ </table>
+ <div class="buttons">
+      <input type="submit" id="submit" value="Submit">
+    </div>
+   <br class="clear">
+   </form>
+  </div>
+</body>
+</html>
+

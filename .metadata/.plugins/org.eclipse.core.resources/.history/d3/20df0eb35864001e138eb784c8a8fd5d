@@ -1,0 +1,15 @@
+package testweb.vo;
+
+public class uploadInfo {
+	
+	
+	private int images;
+	public int getPassword() {
+		return images;
+	}
+	public void setPassword(int images) {
+		this.images=images;
+	}
+	
+}
+

@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>上传和显示图片</title>
+</head>
+<body>
+    <h1>上传和显示图片</h1>
+
+    <%-- 显示已上传的图片 --%>
+    <c:if test="${not empty imageBytes}">
+        <h2>已上传的图片：</h2>
+        <img src="data:image/jpeg;base64,${imageBase64}" alt="Uploaded Image" />
+    </c:if>
+
+    <%-- 上传图片的表单 --%>
+    <form action="uploadAndDisplay.jsp" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="上传图片" />
+    </form>
+
+    <%-- 处理文件上传 --%>
+    <c:if test="${not empty uploadedFile}">
+        <%-- 处理文件上传，保存图片内容到imageBytes --%>
+        <c:set var="imageBytes" value="${uploadedFile.bytes}" />
+        <%-- 将图片内容转换成Base64格式，以便在页面上显示 --%>
+        <c:set var="imageBase64" value='<%= new String(Base64.getEncoder().encode(imageBytes)) %>' />
+    </c:if>
+</body>
+</html>

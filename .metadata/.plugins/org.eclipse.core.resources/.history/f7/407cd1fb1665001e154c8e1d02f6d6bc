@@ -1,0 +1,53 @@
+package testweb.servlet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import testweb.dao.UserDAO;
+import testweb.dao.impl.registeredImpl;
+import testweb.dao.impl.uploadDAOImpl;
+import testweb.vo.UserInfo;
+@WebServlet("/UploadServlet")
+@MultipartConfig
+public class upload extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    	int rowsInserted=0;
+        
+        UserInfo userinfo5 = new UserInfo();
+        userinfo5.setUsername(request.getParameter("username3"));
+        Part filePart = request.getPart("file");
+		InputStream fileContent = filePart.getInputStream();
+		// 读取fileContent的内容到字节数组
+		byte[] fileData = new byte[fileContent.available()];
+		userinfo5.setimageData(fileData);
+		UserDAO daoa = new uploadDAOImpl();
+		
+		try {
+			rowsInserted = daoa.queryByUserInfo4(userinfo5);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (rowsInserted > 0) {
+		    request.setAttribute("message", "上传成功");
+		    request.getRequestDispatcher("1.jsp").forward(request, response);
+		} else {
+		    request.setAttribute("message", "上传失败");
+		    request.getRequestDispatcher("2").forward(request, response);
+		}
+
+        // 重定向回上传页面或其他页面
+        //request.getRequestDispatcher("upload_result.jsp").forward(request, response);
+    }
+}
+

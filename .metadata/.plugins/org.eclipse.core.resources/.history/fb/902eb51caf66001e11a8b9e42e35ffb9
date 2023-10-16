@@ -1,0 +1,14 @@
+package file;
+
+public class test {
+	public static void main(String[] args)
+    {
+        long startTime = System.currentTimeMillis();
+        System.out.println("--------------------------计时开始----------------------------");
+        UpLoadPhoto.UpLoad("C:\\Users\\Administrator\\Desktop\\需求\\照片");
+        long endTime = System.currentTimeMillis();
+        System.out.println("--------------------上传时间为：" + (endTime - startTime) / 1000 + " 秒-----------------");
+        
+    }
+
+}

@@ -1,0 +1,139 @@
+package file;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import testweb.db.DBConnect;
+ 
+public class file
+{
+    /**
+     * UpLoad:(上传到数据库). <br/>
+     * @author syzhao
+     * @param path 文件路径
+     * @since JDK 1.6
+     */
+    public static void UpLoad(String path)
+    {
+    	DBConnect dbc=null;
+    	dbc =new DBConnect();
+        Connection connection = dbc.getConnection();
+        insertPhoto(path, connection);
+        dbc.close();
+    }
+    
+    /**
+     * insertPhoto:(向数据库插入图片). <br/>
+     * @author syzhao
+     * @param path 图片文件夹
+     * @param connection 连接对象
+     * @since JDK 1.6
+     */
+    private static void insertPhoto(String path, Connection connection)
+    {
+        File file = new File(path);
+        //获取该path下的所有的文件
+        String[] photoName = file.list();
+        
+        PreparedStatement pstmt = null;
+        
+        int num = 0;
+        
+        try
+        {
+            String sql =
+                "insert into test(id,soureid,souretype,filename,filesize,content) values(?,?,?,?,?,?)";
+            pstmt = connection.prepareStatement(sql);
+            String fileName = "";
+            String pn = "";
+            for (int i = 0; i < photoName.length; i++)
+            {
+                pn = photoName[i];
+                //获取文件名，不加格式
+                fileName = getFileName(pn);
+                //取出具体的图片文件
+                File file2 = new File(path + "\\" + pn);
+                //读取图片
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file2));
+                //设置主键
+                pstmt.setLong(1, i + 1);
+                //获取文件名
+                pstmt.setString(2, fileName);
+                //设置来源
+                pstmt.setString(3, "1");
+                //文件名+格式
+                pstmt.setString(4, pn);
+                //大小
+                pstmt.setLong(5, file2.length());
+                //设置图片内容  特别说明 连接驱动版本低只是实现了int类型的参数，但是file2.length()是返回long型的，如何你的文件比较大，请更新最新的数据库驱动
+                pstmt.setBinaryStream(6, bis, (int)file2.length());
+                System.out.println("上传成功！");
+                num += pstmt.executeUpdate();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (pstmt != null)
+                {
+                    pstmt.close();
+                }
+                if (connection != null)
+                {
+                    connection.close();
+                }
+                
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+                
+            }
+        }
+        
+        System.out.println("成功上传：" + num + "张图片");
+    }
+    
+    /**
+     * getFileName:(获取文件名，根据条件获取). <br/>
+     * @author 赵守云 syzhao@zsy
+     * @param pn
+     * @return 文件名
+     * @since JDK 1.6
+     */
+    public static String getFileName(String pn)
+    {
+        String fileName = "";
+        //照片名包含括号的，已括号分隔，，例如 123（张三）.jpg  截取后取的值是123
+        if (pn.contains("（"))
+        {
+            fileName = pn.split("（")[0];
+        }
+        //照片名   例如 123.jpg  截取后取的值是123
+        else if (pn.contains(".jpg"))
+        {
+            fileName = pn.split(".jpg")[0];
+        }
+        //照片名   例如 123.JPG  截取后取的值是123
+        else if (pn.contains(".JPG"))
+        {
+            fileName = pn.split(".JPG")[0];
+        }
+        //如果以上不符合    默认 取值为 照片名+格式    例如：123.png
+        else
+        {
+            fileName = pn;
+        }
+        
+        return fileName;
+    }
+}

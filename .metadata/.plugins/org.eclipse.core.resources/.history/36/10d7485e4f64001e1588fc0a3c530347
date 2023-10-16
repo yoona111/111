@@ -1,0 +1,21 @@
+package testweb.vo;
+
+public class uploadInfo {
+	private String username;
+	
+	private int images;
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username =username;
+	}
+	public int getPassword() {
+		return images;
+	}
+	public void setPassword(int images) {
+		this.images=images;
+	}
+	
+}
+

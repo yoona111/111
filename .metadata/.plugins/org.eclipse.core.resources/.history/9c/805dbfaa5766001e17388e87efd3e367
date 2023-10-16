@@ -1,0 +1,50 @@
+package testweb.dao.impl;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Base64;
+
+import testweb.dao.UserDAO;
+import testweb.db.DBConnect;
+import testweb.vo.UserInfo;
+import testweb.vo.messageinfo;
+public class uploadDAOImpl2 implements UserDAO {
+	@Override
+    public int queryByUserInfo(UserInfo userinfo) throws Exception{return 0;}
+	public int queryByUserInfo2(UserInfo userinfo) throws Exception{return 0;}
+	public String queryByUserInfo3(UserInfo userinfo3) throws Exception {
+		// TODO Auto-generated method stub
+		String sql1 ="select * from userinfo where username=?";
+		String base64Image="5";
+		PreparedStatement pstmt2 =null;
+		DBConnect dbc=null;
+		
+				try {
+					dbc =new DBConnect();
+					pstmt2 = dbc.getConnection().prepareStatement(sql1);
+					pstmt2.setString(1,userinfo3.getUsername());
+					ResultSet rs =pstmt2.executeQuery();
+					if(rs.next()) {
+						base64Image = rs.getString("images");
+					    }
+					rs.close();
+					pstmt2.close();
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}finally {
+					dbc.close();
+					}
+				return base64Image;
+	}
+	@Override
+	public int queryByUserInfo1(UserInfo userinfo) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int queryByUserInfo4(UserInfo userinfo5) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	}

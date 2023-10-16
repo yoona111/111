@@ -1,0 +1,18 @@
+package file;
+import java.sql.Connection;
+
+import file.file;
+import testweb.db.DBConnect;
+public class test {
+	public static void main(String[] args)
+    {
+        long startTime = System.currentTimeMillis();
+        System.out.println("--------------------------计时开始----------------------------");
+        file.UpLoad("D:\\桌面\\新建文件夹 (9)");
+        long endTime = System.currentTimeMillis();
+        System.out.println("--------------------上传时间为：" + (endTime - startTime) / 1000 + " 秒-----------------");
+        
+    }
+	
+
+}

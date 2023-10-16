@@ -1,0 +1,53 @@
+package testweb.servlet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import testweb.dao.UserDAO;
+import testweb.dao.messageDAO;
+import testweb.dao.impl.UserDAOImpl;
+import testweb.dao.impl.messageDAOImpl;
+import testweb.dao.impl.uploadDAOImpl;
+import testweb.db.DBConnect;
+import testweb.vo.UserInfo;
+import testweb.vo.messageinfo;
+public class upload extends HttpServlet{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    
+	    
+	    try {
+	        
+	    	
+	        Part filePart = request.getPart("file");
+	        String fileName = filePart.getSubmittedFileName();
+	        String fileType = filePart.getContentType();
+	        InputStream fileContent = filePart.getInputStream();
+
+	    
+	        int rowsInserted = preparedStatement.executeUpdate();
+
+	        // 处理上传后的逻辑
+	        if (rowsInserted > 0) {
+	            request.setAttribute("message", "上传成功");
+	        } else {
+	            request.setAttribute("message", "上传失败");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        request.setAttribute("message", "数据库错误：" + e.getMessage());
+	    }
+
+	    // 重定向回上传页面或其他页面
+	    request.getRequestDispatcher("user.jsp").forward(request, response);
+	}
+	}

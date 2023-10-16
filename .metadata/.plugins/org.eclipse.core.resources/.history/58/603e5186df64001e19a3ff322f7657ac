@@ -1,0 +1,10 @@
+package testweb.dao;
+
+import testweb.vo.*;
+
+public interface UserDAO {
+    public int queryByUserInfo(UserInfo userinfo) throws Exception;
+    public int queryByUserInfo1(UserInfo userinfo) throws Exception;
+    public int queryByUserInfo2(UserInfo userinfo) throws Exception;
+    
+}

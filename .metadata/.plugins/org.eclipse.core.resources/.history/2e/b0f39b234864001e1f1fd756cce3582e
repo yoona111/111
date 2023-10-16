@@ -1,0 +1,7 @@
+package testweb.dao;
+
+import testweb.vo.*;
+
+public interface uploadDAO {
+	public int queryByupload(UserInfo userinfo) throws Exception;
+}

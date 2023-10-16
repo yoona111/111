@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ page import="testweb.vo.messageinfo" %>
+    <%@ page import="java.util.ArrayList" %>
+    <%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="style.css"> <!-- 引用外部样式表 -->
+</head>
+<body>
+    <table>
+        <tr>
+            <th>number</th>
+            <th>Time</th>
+            <th>image</th>
+        </tr>
+
+        
+        <% List<messageinfo> mess = (List<messageinfo>) session.getAttribute("mess");
+               if (mess != null && !mess.isEmpty()) {
+               for (messageinfo message : mess) {
+               String username = message.getUsername();
+               String number = message.getnumber();
+               String time = message.gettime();
+               String image = message.getimage();
+    %>
+    <tr>
+        <td><%= number %></td>
+        <td><%= time %></td>
+        <td class="centered"><img src="<%= image %>" /></td> <!-- 应用样式类来居中图像 -->
+    </tr>
+        
+     <tr>
+        <td class="username-cell"><%= username %></td>
+    </tr>
+    <%}} %>
+    </table>
+</body>
+</html>

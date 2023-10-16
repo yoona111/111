@@ -1,0 +1,108 @@
+package file;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import testweb.db.DBConnect;
+import testweb.vo.messageinfo;
+public class file
+{
+
+    public void insertPhoto(String path, messageinfo messageInfo)
+    {
+    	DBConnect dbc=null;
+    	dbc =new DBConnect();
+        Connection connection = dbc.getConnection();
+        File file = new File(path);
+        //获取该path下的所有的文件
+        String[] photoName = file.list();
+        
+        
+        PreparedStatement pstmt = null;
+        
+        int num = 0;
+        
+        try
+        {
+            String sql =
+                "insert into message(id,image,username) values(?,?,?)";
+            pstmt = connection.prepareStatement(sql);
+            String fileName = "";
+            String pn = "";
+            for (int i = 0; i < photoName.length; i++)
+            {
+                pn = photoName[i];
+                //获取文件名，不加格式
+                fileName = getFileName(pn);
+                //取出具体的图片文件
+                File file2 = new File(path + "\\" + pn);
+                //读取图片
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file2));
+                //设置主键
+                pstmt.setLong(1, i + 12);
+                //获取文件名
+                pstmt.setString(2, "D:\\桌面\\新建文件夹 (9)."+ fileName);
+                pstmt.setString(3, messageInfo.getUsername());
+                //设置来源
+                num += pstmt.executeUpdate();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (pstmt != null)
+                {
+                    pstmt.close();
+                }
+                if (connection != null)
+                {
+                    connection.close();
+                }
+                
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+                
+            }
+        }
+        dbc.close();
+        
+    }
+    
+    public String getFileName(String pn)
+    {
+        String fileName = "";
+        //照片名包含括号的，已括号分隔，，例如 123（张三）.jpg  截取后取的值是123
+        if (pn.contains("（"))
+        {
+            fileName = pn.split("（")[0];
+        }
+        //照片名   例如 123.jpg  截取后取的值是123
+        else if (pn.contains(".jpg"))
+        {
+            fileName = pn.split(".jpg")[0];
+        }
+        //照片名   例如 123.JPG  截取后取的值是123
+        else if (pn.contains(".JPG"))
+        {
+            fileName = pn.split(".JPG")[0];
+        }
+        //如果以上不符合    默认 取值为 照片名+格式    例如：123.png
+        else
+        {
+            fileName = pn;
+        }
+        
+        return fileName;
+    }
+}

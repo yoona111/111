@@ -1,0 +1,11 @@
+package file;
+
+public class test {
+	public static void main(String[] args)
+    {
+        file.UpLoad("D:\\桌面\\新建文件夹 (9)");
+        
+    }
+	
+
+}

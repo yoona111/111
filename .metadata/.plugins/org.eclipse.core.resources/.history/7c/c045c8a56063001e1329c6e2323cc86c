@@ -1,0 +1,22 @@
+@charset "UTF-8";
+table {
+    border-collapse: collapse;
+    width: 66.67%; 
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* 样式类用于居中图像 */
+.centered {
+    text-align: center;
+}
+
+/* 可以添加其他自定义样式 */

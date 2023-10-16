@@ -1,0 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>显示图片</title>
+</head>
+<body>
+    <h1>已上传的图片：</h1>
+    <img src="imageServlet?id=<%= request.getParameter("id") %>" alt="Uploaded Image" />
+</body>
+</html>

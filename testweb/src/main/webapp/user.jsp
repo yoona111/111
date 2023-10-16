@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图片上传</title>
+    <style>
+        body {
+        background-image: url("images/th.jpg");
+    text-align: center;
+    background-size: cover; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an image</h1>
+        <form action="./upload" method="post" enctype="multipart/form-data">
+            <label for="file">Select the image file：</label>
+            <input type="file" name="file" id="file" accept="image/*" required />
+            
+            <label for="description">Enter a user name：</label>
+            <input type="text" name="username3" id="username3" required />
+            
+            <input type="submit" value="上传" />
+        </form>
+    </div>
+</body>
+</html>
+
+

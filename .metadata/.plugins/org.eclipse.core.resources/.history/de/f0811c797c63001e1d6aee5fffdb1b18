@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+   <div class="form-div">
+  <form id ="reg-form" method="post" action="./login">
+     <table>
+    <tr>
+    <tb class="inputs">
+      <label for="username">Username:</label>
+      <input type="text" id="username2" name="username2" required>
+    </tb>
+      </tr>
+      
+     <tr>
+    <tb class="inputs">
+      <label for="password">Password:</label>
+      <input type="text" id="password2" name="password2" required>
+    </tb>
+     </tr>
+     <tr>
+     
+    <tb class="inputs">
+      <label for="number">tellphonenumber:</label>
+      <input type="text" id="number2" name="number2" required>
+    </tb>
+     </tr>
+     
+     </table>
+    <div class="buttons">
+      <input type="submit" id="submit" value="Submit">
+    </div>
+    <br class="clear">
+  </form>
+   </div>
+</body>
+</html>

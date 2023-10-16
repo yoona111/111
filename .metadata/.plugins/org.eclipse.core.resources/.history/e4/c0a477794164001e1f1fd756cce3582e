@@ -1,0 +1,55 @@
+package testweb.servlet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import testweb.db.DBConnect;
+@WebServlet("/UploadServlet")
+public class upload extends HttpServlet{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    String saveDirectory = "path_to_upload_directory";
+    DBConnect dbc=null;
+    try {
+        
+    	dbc =new DBConnect();
+        Part filePart = request.getPart("file");
+        String fileName = filePart.getSubmittedFileName();
+        String fileType = filePart.getContentType();
+        String sql4 ="UPDATE userinfo SET password = ? WHERE username = ?";
+        InputStream fileContent = filePart.getInputStream();
+
+        PreparedStatement preparedStatement = dbc.getConnection().prepareStatement(sql4);
+        preparedStatement.setString(1, fileName);
+        preparedStatement.setString(2, fileType);
+        preparedStatement.setBinaryStream(3, fileContent);
+
+        int rowsInserted = preparedStatement.executeUpdate();
+
+        // 处理上传后的逻辑
+        if (rowsInserted > 0) {
+            request.setAttribute("message", "上传成功");
+        } else {
+            request.setAttribute("message", "上传失败");
+        }
+
+        preparedStatement.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        request.setAttribute("message", "数据库错误：" + e.getMessage());
+    }
+
+    // 重定向回上传页面或其他页面
+    request.getRequestDispatcher("user.jsp").forward(request, response);
+}
+}

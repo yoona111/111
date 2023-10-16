@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="testweb.vo.UserInfo"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="testweb.dao.messageDAO"/>
+    <fullyQualifiedTypeName name="testweb.dao.UserDAO"/>
+    <fullyQualifiedTypeName name="javax.naming.spi.DirStateFactory.Result"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="testweb.dao.impl.registeredImpl"/>
+    <fullyQualifiedTypeName name="testweb.dao.impl.uploadDAOImpl"/>
+    <fullyQualifiedTypeName name="testweb.dao.uploadDAO"/>
+    <fullyQualifiedTypeName name="testweb.vo.uploadInfo"/>
+    <fullyQualifiedTypeName name="org.apache.tomcat.util.http.fileupload.IOUtils"/>
+    <fullyQualifiedTypeName name="com.mysql.cj.jdbc.Blob"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
+    <fullyQualifiedTypeName name="testweb.dao.impl.uploadDAOImpl2"/>
+    <fullyQualifiedTypeName name="testweb.db.DBConnect"/>
+    <fullyQualifiedTypeName name="file.file"/>
+</qualifiedTypeNameHistroy>
